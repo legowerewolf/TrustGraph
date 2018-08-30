@@ -9,13 +9,11 @@ export interface TrustNode {
 
 export class TrustGraph {
     store: Store;
-
-    ROOT_USER = {
-        name: "ROOT", uuid: "ROOT"
-    }
+    ROOT_USER: TrustNode;
 
     constructor() {
         this.store = createStore(root);
+        this.ROOT_USER = { name: "ROOT", uuid: "ROOT", children: new Array<TrustNode>() }
     }
 
     dispatchAction(action: Action) {

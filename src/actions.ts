@@ -1,3 +1,5 @@
+import { TrustNode } from "./graph";
+
 export const CREATE_USER = "ADD_USER"
 export const ADD_CHILD = "ADD_TRUSTEE"
 
@@ -9,10 +11,10 @@ export function addNode(name: string, uuid: string) {
     }
 }
 
-export function addChild(parent: string, child: string) {
+export function addChild(parent: TrustNode, child: TrustNode) {
     return {
         type: ADD_CHILD,
-        parent_uuid: parent,
-        child_uuid: child
+        parent_uuid: parent.uuid,
+        child_uuid: child.uuid
     }
 }
