@@ -1,6 +1,9 @@
 import { createStore } from 'redux';
 import { addChild, addNode } from './actions';
+import { TrustGraph } from './graph';
 import { root } from './reducers';
+
+var tg = new TrustGraph();
 
 var store = createStore(root);
 
@@ -27,11 +30,24 @@ var actions = [
 
 actions.forEach((action) => {
     store.dispatch(action);
+    tg.dispatchAction(action);
 })
 
+console.log("Identical states: ")
 console.log(store.getState());
+console.log(tg.store.getState());
 
+console.log("Identical roots:")
+console.log(store.getState().nodes[0])
+console.log(tg.store.getState().nodes[0])
+
+console.log("Identical parents of 5: ")
+console.log(getParents("5"));
+console.log(tg.getParents(tg.getNodeByID("5")))
+
+console.log("Identical stats: ")
 console.log(getStats("5"));
+console.log(tg.getStats(tg.getNodeByID("5")))
 
 function getParents(uuid: string) {
     return store.getState().nodes.filter(user => user.children.indexOf(uuid) != -1).map(user => user.uuid);
