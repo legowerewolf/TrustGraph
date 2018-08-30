@@ -14,7 +14,7 @@ export function addNode(name: string, uuid: string) {
 export function addChild(parent: TrustNode, child: TrustNode) {
     return {
         type: ADD_CHILD,
-        parent_uuid: parent.uuid,
+        parent: parent,
         child_uuid: child.uuid
     }
 }

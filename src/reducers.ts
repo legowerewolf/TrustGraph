@@ -12,7 +12,7 @@ function nodes(state = [], action) {
             return [...state, { name: action.name, uuid: action.uuid, children: [] }]
         case ADD_CHILD:
             return state.map((user) => {
-                if (user.uuid == action.parent_uuid) {
+                if (user.uuid == action.parent.uuid) {
                     return { ...user, children: [...user.children, action.child_uuid] }
                 }
                 return user
