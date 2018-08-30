@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import { addChild, createUser } from './actions';
+import { addChild, addNode } from './actions';
 import { root } from './reducers';
 
 var store = createStore(root);
@@ -9,13 +9,13 @@ var ROOT_USER = {
 }
 
 var actions = [
-    createUser(ROOT_USER.name, ROOT_USER.uuid),
-    createUser("1", "1"),
-    createUser("2", "2"),
-    createUser("3", "3"),
-    createUser("4", "4"),
-    createUser("5", "5"),
-    createUser("6", "6"),
+    addNode(ROOT_USER.name, ROOT_USER.uuid),
+    addNode("1", "1"),
+    addNode("2", "2"),
+    addNode("3", "3"),
+    addNode("4", "4"),
+    addNode("5", "5"),
+    addNode("6", "6"),
     addChild(ROOT_USER.uuid, "1"),
     addChild("1", "5"),
     addChild("5", "6"),
@@ -34,7 +34,7 @@ console.log(store.getState());
 console.log(getStats("5"));
 
 function getParents(uuid: string) {
-    return store.getState().users.filter(user => user.children.indexOf(uuid) != -1).map(user => user.uuid);
+    return store.getState().nodes.filter(user => user.children.indexOf(uuid) != -1).map(user => user.uuid);
 }
 
 function getStats(uuid: string) {
