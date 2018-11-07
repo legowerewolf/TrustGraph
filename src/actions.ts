@@ -1,37 +1,22 @@
-import { TrustNode } from "./graph";
+import { GraphAction } from "./types";
 
-export const CREATE_USER = "ADD_USER";
-export const ADD_TRUSTEE = "ADD_TRUSTEE";
-export const REMOVE_NODE = "REMOVE_NODE";
-export const REMOVE_TRUSTEE = "REMOVE_TRUSTEE";
+export const Actions = {
+    FORM_BOND: "FORM_BOND",
+    BREAK_BOND: "BREAK_BOND"
+}
 
-export function addNode(name: string, uuid: string) {
+export function formBond(parent: string, child: string): GraphAction {
     return {
-        type: CREATE_USER,
-        name: name,
-        uuid: uuid
+        type: Actions.FORM_BOND,
+        parent,
+        child
     }
 }
 
-export function addChild(parent: TrustNode, child: TrustNode) {
+export function breakBond(parent: string, child: string): GraphAction {
     return {
-        type: ADD_TRUSTEE,
-        parent: parent,
-        child: child.uuid
-    }
-}
-
-export function removeNode(node: TrustNode) {
-    return {
-        type: REMOVE_NODE,
-        node: node
-    }
-}
-
-export function removeChild(parent: TrustNode, child: TrustNode) {
-    return {
-        type: REMOVE_TRUSTEE,
-        parent: parent,
-        child: child.uuid
+        type: Actions.BREAK_BOND,
+        parent,
+        child
     }
 }

@@ -1,55 +1,51 @@
-import { Action, createStore, Store } from "redux";
+import { createStore, Store } from "redux";
+import { arrayContains } from "./helpers";
 import { root } from "./reducers";
-
-export interface TrustNode {
-    name: string;
-    uuid: string;
-    children: Array<TrustNode>;
-}
+import { GraphAction, StoreShape } from "./types";
 
 export class TrustGraph {
-    store: Store;
-    ROOT_USER: TrustNode;
+    store: Store<StoreShape>;
+    ROOT_USER: string;
+
+    static directions = {
+        UP: 1,
+        DOWN: 0
+    }
 
     constructor() {
         this.store = createStore(root);
-        this.ROOT_USER = { name: "ROOT", uuid: "ROOT", children: new Array<TrustNode>() }
     }
 
-    dispatchAction(action: Action) {
+    dispatchAction(action: GraphAction) {
         this.store.dispatch(action);
     }
 
-    getNodeByID(uuid: string): TrustNode {
-        return this.store.getState().nodes.find((node) => { return node.uuid == uuid });
+    getDirect(node: string, direction: number): string[] {
+        return this.store.getState().
+            relationships.filter(relationship => relationship[direction] == node)
+            .map(relationship => relationship[1 - direction]);
     }
 
-    getParents(node: TrustNode) {
-        return this.store.getState().nodes.filter(user => user.children.indexOf(node.uuid) != -1);
-    }
-
-    getStats(node: TrustNode) {
-        let stats = {
-            ancestors: this.getParents(node),
-            rank: 1,
-            isTrusted: false
-        }
-
-        //List ancestors and calculate rank
-        let lastSize = 0;
-        while (stats.ancestors.length != lastSize) {
-            lastSize = stats.ancestors.length;
-
-            stats.ancestors.forEach(element => {
-                stats.ancestors.push(...this.getParents(element).filter(ancestor => stats.ancestors.indexOf(ancestor) == -1))
+    getAll(node: string, direction: number): string[] {
+        let nodes = this.getDirect(node, direction);
+        for (let lastLength = -1; nodes.length > lastLength;) {
+            lastLength = nodes.length;
+            nodes.forEach(element => {
+                nodes.push(...this.getDirect(element, direction).filter(newAncestor => !arrayContains(nodes, newAncestor)))
             });
-
-            stats.rank = stats.isTrusted ? stats.rank : stats.rank + 1;
-            if (stats.ancestors.map(n => n.uuid).indexOf(this.ROOT_USER.uuid) != -1 && !stats.isTrusted) {
-                stats.isTrusted = true;
-            }
         }
+        return nodes;
+    }
 
-        return stats
+    getSeperation(nodeA: string, nodeB: string, direction: number): number {
+        let nodes = this.getDirect(nodeA, direction);
+        let generations = 1;
+        for (let lastLength = -1; nodes.length > lastLength && !arrayContains(nodes, nodeB); generations++) {
+            lastLength = nodes.length;
+            nodes.forEach(element => {
+                nodes.push(...this.getDirect(element, direction).filter(newAncestor => !arrayContains(nodes, newAncestor)))
+            });
+        }
+        return arrayContains(nodes, nodeB) ? generations : null;
     }
 }

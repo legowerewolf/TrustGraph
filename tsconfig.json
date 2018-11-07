@@ -6,7 +6,7 @@
         "moduleResolution": "node",
         "module": "commonjs",
         "target": "es2016",
-        //"noImplicitAny": true,
+        "noImplicitAny": true,
         "allowJs": true
     }
 }

@@ -1,32 +1,18 @@
-import { ADD_TRUSTEE, CREATE_USER, REMOVE_NODE, REMOVE_TRUSTEE } from "./actions";
+import { Actions } from "./actions";
+import { arrayIsIdentical } from "./helpers";
+import { GraphAction, Relationship, StoreShape } from "./types";
 
-export function root(state: any = {}, action) {
+export function root(state: any = {}, action: GraphAction): StoreShape {
     return {
-        nodes: nodes(state.nodes, action)
+        relationships: relationships(state.relationships, action)
     }
 }
 
-function nodes(state = [], action) {
+function relationships(state: Relationship[] = [], action: GraphAction): Relationship[] {
     switch (action.type) {
-        case CREATE_USER:
-            return [...state, { name: action.name, uuid: action.uuid, children: [] }]
-        case ADD_TRUSTEE:
-            return state.map((user) => {
-                if (user.uuid == action.parent.uuid) {
-                    return { ...user, children: [...user.children, action.child] }
-                }
-                return user
-            })
-        case REMOVE_TRUSTEE:
-            return state.map((user) => {
-                if (user.uuid == action.parent.uuid) {
-                    return { ...user, children: user.children.filter(child => child.uuid != action.child.uuid) }
-                }
-                return user
-            })
-        case REMOVE_NODE:
-            return state.filter((node) => {
-                return node.uuid != action.node.uuid;
-            })
+        case Actions.FORM_BOND:
+            return [...state, [action.parent, action.child]];
+        case Actions.BREAK_BOND:
+            return state.filter((relationship) => !arrayIsIdentical(relationship, [action.parent, action.child]))
     }
 }
