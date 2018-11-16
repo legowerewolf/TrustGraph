@@ -1,12 +1,11 @@
+import { combineReducers } from "redux";
 import { Actions } from "./actions";
 import { arrayIsIdentical } from "./helpers";
-import { GraphAction, Relationship, StoreShape } from "./types";
+import { GraphAction, Relationship } from "./types";
 
-export function root(state: any = {}, action: GraphAction): StoreShape {
-    return {
-        relationships: relationships(state.relationships, action)
-    }
-}
+export const root_reducer = combineReducers({
+    relationships
+})
 
 function relationships(state: Relationship[] = [], action: GraphAction): Relationship[] {
     switch (action.type) {
@@ -14,5 +13,7 @@ function relationships(state: Relationship[] = [], action: GraphAction): Relatio
             return [...state, [action.parent, action.child]];
         case Actions.BREAK_BOND:
             return state.filter((relationship) => !arrayIsIdentical(relationship, [action.parent, action.child]))
+        default:
+            return state;
     }
 }
