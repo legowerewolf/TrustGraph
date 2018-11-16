@@ -1,6 +1,6 @@
 import { createStore, Store } from "redux";
 import { arrayContains } from "./helpers";
-import { root } from "./reducers";
+import { root_reducer } from "./reducers";
 import { GraphAction, StoreShape } from "./types";
 
 export class TrustGraph {
@@ -13,7 +13,7 @@ export class TrustGraph {
     }
 
     constructor() {
-        this.store = createStore(root);
+        this.store = createStore(root_reducer);
     }
 
     dispatchAction(action: GraphAction) {
