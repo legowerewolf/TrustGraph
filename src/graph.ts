@@ -21,8 +21,8 @@ export class TrustGraph {
     }
 
     getDirect(node: string, direction: number): string[] {
-        return this.store.getState().
-            relationships.filter(relationship => relationship[direction] == node)
+        return this.store.getState().relationships
+            .filter(relationship => relationship[direction] == node)
             .map(relationship => relationship[1 - direction]);
     }
 
