@@ -4,12 +4,12 @@
   "description": "Web-of-trust-based access control system",
   "main": "Gulpfile.js",
   "dependencies": {
-    "redux": "^4.0.1"
+    "redux": "4.0.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^5.0.0-alpha.3",
-    "typescript": "^3.3.3333"
+    "gulp": "4.0.0",
+    "gulp-typescript": "5.0.0",
+    "typescript": "3.3.3333"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
