@@ -1,28 +1,28 @@
 {
-  "name": "trustgraph",
-  "version": "1.0.0",
-  "description": "Web-of-trust-based access control system",
-  "main": "Gulpfile.js",
-  "dependencies": {
-    "redux": "4.0.1"
-  },
-  "devDependencies": {
-    "gulp": "4.0.0",
-    "gulp-typescript": "5.0.1",
-    "typescript": "3.4.2"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node build/index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/legowerewolf/TrustGraph.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/legowerewolf/TrustGraph/issues"
-  },
-  "homepage": "https://github.com/legowerewolf/TrustGraph#readme"
+	"name": "directedgraph",
+	"version": "1.0.0",
+	"description": "Directed-graph edge manager.",
+	"main": "Gulpfile.js",
+	"dependencies": {
+		"redux": "4.0.1"
+	},
+	"devDependencies": {
+		"gulp": "4.0.0",
+		"gulp-typescript": "5.0.1",
+		"typescript": "3.4.2"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node build/index"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/legowerewolf/DirectedGraph.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/legowerewolf/DirectedGraph/issues"
+	},
+	"homepage": "https://github.com/legowerewolf/DirectedGraph#readme"
 }
