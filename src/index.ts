@@ -1,16 +1,10 @@
-import { formBond } from './actions';
-import { TrustGraph } from './graph';
+import { formBond } from "./actions";
+import { DirectedGraph } from "./graph";
 
-var tg = new TrustGraph();
+var graph = new DirectedGraph();
 
-[
-    formBond("root", "u001"),
-    formBond("u001", "u002"),
-    formBond("u001", "u003"),
-    formBond("root", "u003"),
-]
-    .forEach((action) => tg.dispatchAction(action))
+[formBond("root", "u001"), formBond("u001", "u002"), formBond("u001", "u003"), formBond("root", "u003")].forEach((action) => graph.dispatchAction(action));
 
-console.log(tg.store.getState())
+console.log(graph.store.getState());
 
-console.log(tg.getDirect('root', TrustGraph.directions.DOWN));
+console.log(graph.getDirect("root", DirectedGraph.Direction.DOWN));
